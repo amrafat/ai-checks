@@ -1,0 +1,4977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page: Design</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus%20Jakarta%20Sans:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM%20Serif%20Display:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --dk-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dk-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dk-focus-ring: 0 0 0 3px rgba(13, 153, 255, 0.28);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: #FFFFFF;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.dk-canvas-viewport {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  overflow-x: clip;
+  background-color: #FFFFFF;
+}
+
+.dk-root-frame {
+  width: 100%;
+  max-width: 100%;
+}
+
+.dk-mobile-menu-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  background: rgba(255, 255, 255, 0.92);
+  color: #0F172A;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Sticky Navbar & Scrolled Elevation */
+.dk-sticky-navbar {
+  position: sticky !important;
+  top: 0 !important;
+  width: 100% !important;
+  z-index: 1000 !important;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  transition: background-color 0.28s var(--dk-ease-out), box-shadow 0.28s var(--dk-ease-out), border-color 0.28s var(--dk-ease-out);
+}
+
+.dk-sticky-navbar.dk-navbar-scrolled {
+  box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.14), 0 1px 0 0 rgba(15, 23, 42, 0.06) !important;
+}
+
+.dk-synthesized-navbar {
+  position: sticky !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  z-index: 1000 !important;
+}
+
+/* Micro-Animations & Entrance Keyframes */
+@keyframes dkFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dkRippleExpand {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.45;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(3.8);
+    opacity: 0;
+  }
+}
+
+.dk-animate-in {
+  animation: dkFadeUp 0.55s var(--dk-ease-out) both;
+  animation-delay: var(--dk-delay, 0ms);
+}
+
+/* Interactive Buttons */
+.dk-interactive-btn {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer !important;
+  user-select: none;
+  text-decoration: none;
+  outline: none;
+  overflow: hidden;
+  transition:
+    transform 0.22s var(--dk-ease-out),
+    box-shadow 0.22s var(--dk-ease-out),
+    filter 0.22s var(--dk-ease-out),
+    background-color 0.22s var(--dk-ease-out),
+    border-color 0.22s var(--dk-ease-out);
+}
+
+.dk-interactive-btn > * {
+  pointer-events: none;
+}
+
+.dk-interactive-btn:hover {
+  transform: translateY(-2px) scale(1.018);
+  filter: brightness(1.05);
+  box-shadow: 0 10px 24px -6px rgba(15, 23, 42, 0.22), 0 4px 10px -2px rgba(13, 153, 255, 0.16);
+}
+
+.dk-interactive-btn:active {
+  transform: translateY(0px) scale(0.975);
+  filter: brightness(0.97);
+}
+
+.dk-interactive-btn:focus-visible {
+  box-shadow: var(--dk-focus-ring);
+}
+
+.dk-ripple-wave {
+  position: absolute;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.55);
+  pointer-events: none;
+  animation: dkRippleExpand 0.55s var(--dk-ease-out) forwards;
+}
+
+/* Interactive Inputs, Textareas & Selects */
+.dk-interactive-input {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: text !important;
+  outline: none;
+  transition:
+    border-color 0.2s var(--dk-ease-out),
+    box-shadow 0.2s var(--dk-ease-out),
+    background-color 0.2s var(--dk-ease-out),
+    transform 0.2s var(--dk-ease-out);
+}
+
+.dk-interactive-input::placeholder {
+  color: #6B7280;
+  opacity: 0.85;
+}
+
+.dk-interactive-input:hover {
+  border-color: rgba(13, 153, 255, 0.55) !important;
+}
+
+.dk-interactive-input:focus {
+  border-color: #0D99FF !important;
+  box-shadow: var(--dk-focus-ring) !important;
+}
+
+.dk-input-wrapper {
+  display: flex;
+  align-items: center;
+  cursor: text;
+  transition: border-color 0.2s var(--dk-ease-out), box-shadow 0.2s var(--dk-ease-out);
+}
+
+.dk-input-wrapper:focus-within {
+  border-color: #0D99FF !important;
+  box-shadow: var(--dk-focus-ring) !important;
+}
+
+.dk-input-wrapper input {
+  width: 100%;
+  height: 100%;
+  border: none !important;
+  background: transparent !important;
+  outline: none !important;
+  color: inherit;
+  font: inherit;
+  padding: 0 14px;
+}
+
+/* Interactive Links */
+.dk-interactive-link {
+  cursor: pointer !important;
+  text-decoration: none;
+  transition: color 0.2s var(--dk-ease-out), opacity 0.2s var(--dk-ease-out), transform 0.2s var(--dk-ease-out);
+}
+
+.dk-interactive-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1.5px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 0.24s var(--dk-ease-out);
+  opacity: 0.75;
+}
+
+.dk-interactive-link:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.dk-interactive-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* Interactive Feature / Pricing / Content Cards */
+.dk-interactive-card {
+  transition:
+    transform 0.28s var(--dk-ease-out),
+    box-shadow 0.28s var(--dk-ease-out),
+    border-color 0.28s var(--dk-ease-out);
+}
+
+.dk-interactive-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 38px -12px rgba(15, 23, 42, 0.14), 0 4px 12px -2px rgba(15, 23, 42, 0.06);
+}
+
+/* Interactive Toast Feedback */
+.dk-toast-notification {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.94);
+  color: #FFFFFF;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  transform: translateY(16px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.26s var(--dk-ease-out), opacity 0.26s var(--dk-ease-out);
+}
+
+.dk-toast-notification.dk-toast-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ========================================================================== */
+/* ROOT ARTBOARD: main.app-screen — AI Design Screen: Create me a Facebook-like mobile (390x1969px) */
+/* ========================================================================== */
+
+.dk-main-app-screen-ai-design-screen-create-me-a-facebook-like-mobile-29897 {
+  --dk-design-width: 390;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0px;
+  overflow-x: clip;
+  background-color: #FFFFFF;
+}
+
+
+/* ==================== SECTION: header.app-bar — Top Bar ==================== */
+
+.dk-header-app-bar-top-bar-eader {
+  position: sticky !important;
+  top: 0 !important;
+  left: 0;
+  width: 100%;
+  min-height: 60px;
+  z-index: 1000 !important;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0px clamp(16px, 4vw, 24px);
+  background-color: #FFFFFF;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
+.dk-nav-app-bar-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+}
+
+.dk-view-row-avrow {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+}
+
+.dk-text-title-create-me-a-facebook-lik-ape22 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  color: #212529;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-image-avatar-avatar-ape33 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  background-image: url("https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  border: 1.5px solid #FFFFFF;
+}
+
+
+/* ==================== SECTION: section#hero — Featured Card ==================== */
+
+.dk-section-hero-featured-card-msec1 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  background-color: #FFFFFF;
+}
+
+.dk-view-section-bg-vasbg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-view-section-bg-ape00 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-view-container-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+}
+
+.dk-searchbar-search-anything-ape44 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  border: 1.25px solid #CBD5E1;
+}
+
+.dk-text-h3-featured-categories-ape66 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  color: #0F172A;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-view-grid-3grid {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+}
+
+.dk-button-overview-ape77 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  background-color: #6C757D;
+  border-radius: 12px;
+}
+
+.dk-button-popular-ape88 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  background-color: #0D6EFD;
+  border-radius: 12px;
+}
+
+.dk-button-saved-ape99 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  background-color: #0D6EFD;
+  border-radius: 12px;
+}
+
+.dk-view-row-r4row {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+}
+
+.dk-card-item-card1 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+}
+
+.dk-view-card-surface-e1010 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-image-preview-1-e1111 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  background-image: url("https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1000&q=80");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 14px;
+}
+
+.dk-text-body-primary-module-e1212 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  color: #475569;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-text-body-updated-today-e1313 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  color: #475569;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-card-item-card2 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+}
+
+.dk-view-card-surface-e1414 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-image-preview-2-e1515 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  background-image: url("https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 14px;
+}
+
+.dk-text-body-analytics-hub-e1616 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  color: #475569;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-text-body-active-status-e1717 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  color: #475569;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-button-ios-system-blue-button-pm384 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  background-color: #0D6EFD;
+  border-radius: 14px;
+}
+
+.dk-label-7nrgd {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  color: #F8F9FA;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: center;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-image-featured-banner-media-ape55 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  background-image: url("https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=1000&q=80");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 14px;
+}
+
+
+/* ==================== SECTION: nav.tab-bar — Bottom TabBar ==================== */
+
+.dk-nav-tab-bar-bottom-tabbar-ooter {
+  position: sticky !important;
+  top: 0 !important;
+  left: 0;
+  width: 100%;
+  min-height: 60px;
+  z-index: 1000 !important;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0px clamp(16px, 4vw, 24px);
+  background-color: #FFFFFF;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
+.dk-view-section-bg-e1919 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-view-container-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+}
+
+.dk-view-row-errow {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+}
+
+.dk-view-section-bg-0jact {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  border: 1px solid #D1D1D6;
+}
+
+.dk-home-tab-vrloq {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  color: #007AFF;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: center;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-search-tab-xng7l {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  color: #8E8E93;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: center;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-library-tab-pak3a {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  color: #8E8E93;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: center;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-profile-tab-vauqd {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  color: #8E8E93;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: center;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+/* ========================================================================== */
+/* ROOT ARTBOARD: main — Artboard / DewPuff Landing (1440x2200px) */
+/* ========================================================================== */
+
+.dk-main-artboard-dewpuff-landing-49096 {
+  --dk-design-width: 1440;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0px;
+  overflow-x: clip;
+  background-color: #FFF9F8;
+}
+
+
+/* ==================== SECTION: header — Navbar ==================== */
+
+.dk-header-navbar-eader {
+  position: sticky !important;
+  top: 0 !important;
+  left: 0;
+  width: 100%;
+  min-height: 80px;
+  z-index: 1000 !important;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0px clamp(16px, 4vw, 24px);
+  background-color: #FFFFFF;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
+.dk-div-section-bg-90961 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FFFFFF;
+  border: 1px solid #F4DEE4;
+}
+
+.dk-nav-container-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: clamp(16px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 16px clamp(16px, 4vw, 16px) 16px clamp(16px, 4vw, 16px);
+}
+
+.dk-div-row-avrow {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+}
+
+.dk-a-brand-dewpuff-09625 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #FF5E86;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-a-nav-link-bestsellers-09626 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #2C2126;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-a-nav-link-jelly-routine-09627 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #806D76;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-a-nav-link-ingredient-lab-09628 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #806D76;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-a-nav-link-skin-quiz-09629 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #806D76;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-button-tote-bag-2-09617 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 45px;
+  background-color: #FF5E86;
+  border-radius: 200px;
+  border: 1px solid transparent;
+}
+
+
+/* ==================== SECTION: section#hero — Hero ==================== */
+
+.dk-section-hero-hero-msec1 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #FFFFFF;
+}
+
+.dk-div-container-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: clamp(16px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 24px clamp(16px, 4vw, 24px) 24px clamp(16px, 4vw, 24px);
+}
+
+.dk-div-row-itrow {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.dk-div-col-right {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 650px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.dk-div-card-surface-90962 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FDE8ED;
+  border-radius: 200px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-img-hero-model-image-09612 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 600 / 480;
+  height: auto;
+  background-image: url("https://images.pexels.com/photos/4920513/pexels-photo-4920513.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 32px;
+  border: 1px solid transparent;
+}
+
+.dk-article-card-card3 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+}
+
+.dk-div-card-surface-90968 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FFFFFF;
+  border-radius: 18px;
+  border: 1px solid #F7E6EB;
+}
+
+.dk-h3-hydra-puff-cream-09637 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #2C2126;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-voted-1-best-barrier-wh-09638 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #72D0A5;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-div-col-lleft {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.dk-button-cloudy-peptide-formula-2-90969 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 40px;
+  background-color: #FFF0F3;
+  border-radius: 200px;
+  border: 1px solid #FFD7E2;
+}
+
+.dk-h1-bouncy-cushiony-skin-ma-09631 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 560px;
+  height: auto;
+  color: #2C2126;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(30px, 3.61vw, 52px);
+  font-weight: 800;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-whipped-ceramide-clouds-09632 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 530px;
+  height: auto;
+  color: #806D76;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-button-shop-dew-drops-09618 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 52px;
+  background-color: #FF5E86;
+  border-radius: 200px;
+  border: 1px solid transparent;
+}
+
+.dk-input-find-my-match-09619 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 190px;
+  height: auto;
+  background-color: #FFFFFF;
+  border-radius: 200px;
+  border: 1.5px solid #F4DEE4;
+}
+
+.dk-article-card-card6 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+}
+
+.dk-div-card-surface-09610 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #F7E6EB;
+}
+
+.dk-h2-98-09633 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #FF5E86;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-plumper-barrier-09634 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #806D76;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-article-card-card7 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+}
+
+.dk-div-card-surface-09611 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #F7E6EB;
+}
+
+.dk-h2-4-95-09635 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #2C2126;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-24k-cute-reviews-09636 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #806D76;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+
+/* ==================== SECTION: section#features — Features ==================== */
+
+.dk-section-features-features-msec2 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #FFFFFF;
+}
+
+.dk-div-container-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: clamp(16px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 24px clamp(16px, 4vw, 24px) 24px clamp(16px, 4vw, 24px);
+}
+
+.dk-h1-cult-favorites-for-plush-09639 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 600px;
+  height: auto;
+  color: #2C2126;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(22px, 2.22vw, 32px);
+  font-weight: 800;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-div-grid-3grid {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.dk-article-card-card1 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+}
+
+.dk-div-card-surface-90963 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FFFFFF;
+  border-radius: 24px;
+  border: 1px solid #F4DEE4;
+}
+
+.dk-img-card-1-image-09613 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 340 / 220;
+  height: auto;
+  background-image: url("https://images.pexels.com/photos/9246304/pexels-photo-9246304.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 18px;
+  border: 1px solid transparent;
+}
+
+.dk-p-jelly-wash-24-09641 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #FF5E86;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-h3-berry-melt-gel-cleanser-09642 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 332px;
+  height: auto;
+  color: #2C2126;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-button-quick-add-09620 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 45px;
+  background-color: #FFF0F3;
+  border-radius: 200px;
+  border: 1.5px solid #FFD7E2;
+}
+
+.dk-p-transformative-pudding-j-09643 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 332px;
+  height: auto;
+  color: #806D76;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-article-card-card2 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+}
+
+.dk-div-card-surface-90964 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FFFFFF;
+  border-radius: 24px;
+  border: 1px solid #F4DEE4;
+}
+
+.dk-img-card-2-image-09614 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 340 / 220;
+  height: auto;
+  background-image: url("https://images.pexels.com/photos/9775170/pexels-photo-9775170.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 18px;
+  border: 1px solid transparent;
+}
+
+.dk-p-barrier-serum-32-09644 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #FF5E86;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-h3-dew-glaze-barrier-drops-09645 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 332px;
+  height: auto;
+  color: #2C2126;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-button-quick-add-09621 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 45px;
+  background-color: #FF5E86;
+  border-radius: 200px;
+  border: 1px solid transparent;
+}
+
+.dk-p-infused-with-5-niacinam-09646 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 332px;
+  height: auto;
+  color: #806D76;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-article-card-card3 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+}
+
+.dk-div-card-surface-90965 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FFFFFF;
+  border-radius: 24px;
+  border: 1px solid #F4DEE4;
+}
+
+.dk-img-card-3-image-09615 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 340 / 220;
+  height: auto;
+  background-image: url("https://images.pexels.com/photos/5938246/pexels-photo-5938246.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 18px;
+  border: 1px solid transparent;
+}
+
+.dk-p-hydration-whip-29-09647 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #FF5E86;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-h3-cloud-pillow-ceramide-po-09648 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 332px;
+  height: auto;
+  color: #2C2126;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-button-quick-add-09622 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 45px;
+  background-color: #FFF0F3;
+  border-radius: 200px;
+  border: 1.5px solid #FFD7E2;
+}
+
+.dk-p-air-whipped-souffl-crea-09649 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 332px;
+  height: auto;
+  color: #806D76;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-crafted-with-whipped-mar-09640 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 620px;
+  height: auto;
+  color: #806D76;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+
+/* ==================== SECTION: section#showcase — Showcase ==================== */
+
+.dk-section-showcase-showcase-msec3 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #FFFFFF;
+}
+
+.dk-div-section-bg-90966 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FFFFFF;
+  border-radius: 32px;
+  border: 1px solid #F4DEE4;
+}
+
+.dk-div-container-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: clamp(16px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 24px clamp(16px, 4vw, 24px) 24px clamp(16px, 4vw, 24px);
+}
+
+.dk-div-row-itrow {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1120px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.dk-div-col-lleft {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+}
+
+.dk-img-showcase-lifestyle-i-09616 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 500 / 380;
+  height: auto;
+  background-image: url("https://images.pexels.com/photos/9774961/pexels-photo-9774961.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 24px;
+  border: 1px solid transparent;
+}
+
+.dk-div-col-right {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 580px;
+  height: auto;
+}
+
+.dk-p-the-dewpuff-promise-09650 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #FF5E86;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-h1-gentle-on-sensitive-skin-09651 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 580px;
+  height: auto;
+  color: #2C2126;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(22px, 2.22vw, 32px);
+  font-weight: 800;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-triple-fermented-pept-09652 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 560px;
+  height: auto;
+  color: #2C2126;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-zero-pore-clogging-wa-09653 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 560px;
+  height: auto;
+  color: #2C2126;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-100-vegan-peta-crue-09654 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 560px;
+  height: auto;
+  color: #2C2126;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-button-read-the-clinical-test-09623 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 50px;
+  background-color: #2C2126;
+  border-radius: 200px;
+  border: 1px solid transparent;
+}
+
+
+/* ==================== SECTION: section#cta — Call to Action ==================== */
+
+.dk-section-cta-call-to-action-msec4 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #FFFFFF;
+}
+
+.dk-div-section-bg-90967 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FF5E86;
+  border-radius: 28px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-div-container-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: clamp(16px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 24px clamp(16px, 4vw, 24px) 24px clamp(16px, 4vw, 24px);
+}
+
+.dk-div-grid-1grid {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1060px;
+  height: auto;
+}
+
+.dk-h1-ready-for-your-happiest-09655 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 640px;
+  height: auto;
+  color: #FFFFFF;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(22px, 2.22vw, 32px);
+  font-weight: 800;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-button-get-15-off-my-glow-09624 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 54px;
+  background-color: #FFFFFF;
+  border-radius: 200px;
+  border: 1px solid transparent;
+}
+
+.dk-p-join-our-club-and-get-15-09656 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 580px;
+  height: auto;
+  color: #FFE4EC;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+
+/* ==================== SECTION: footer — Site Footer ==================== */
+
+.dk-footer-site-footer-ooter {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #FFFFFF;
+}
+
+.dk-div-container-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: clamp(16px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 24px clamp(16px, 4vw, 24px) 24px clamp(16px, 4vw, 24px);
+}
+
+.dk-div-row-errow {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+}
+
+.dk-p-2025-dewpuff-lab-inc-09657 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 340px;
+  height: auto;
+  color: #806D76;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-dermatologist-tested-c-09658 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 400px;
+  height: auto;
+  color: #806D76;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+/* ========================================================================== */
+/* ROOT ARTBOARD: main — Artboard / Landing Page (1440x1800px) */
+/* ========================================================================== */
+
+.dk-main-artboard-landing-page-27823 {
+  --dk-design-width: 1440;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0px;
+  overflow-x: clip;
+  background-color: #FFF9F8;
+}
+
+
+/* ==================== SECTION: header — Navbar ==================== */
+
+.dk-header-navbar-eader {
+  position: sticky !important;
+  top: 0 !important;
+  left: 0;
+  width: 100%;
+  min-height: 80px;
+  z-index: 1000 !important;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0px clamp(16px, 4vw, 24px);
+  background-color: #FFFFFF;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
+.dk-div-section-bg-78231 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-nav-container-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: clamp(16px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 16px clamp(16px, 4vw, 16px) 16px clamp(16px, 4vw, 16px);
+}
+
+.dk-div-row-avrow {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+}
+
+.dk-a-brand-mochi-skin-82317 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #4A3B39;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-a-nav-link-shop-all-82318 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #4A3B39;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: center;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-a-nav-link-rituals-82319 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #4A3B39;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-a-nav-link-our-story-82320 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #4A3B39;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-button-cart-0-82311 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 45px;
+  background-color: #FFB7C5;
+  border-radius: 22px;
+  border: 1px solid transparent;
+}
+
+
+/* ==================== SECTION: section#hero — Hero ==================== */
+
+.dk-section-hero-hero-msec1 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #FFFFFF;
+}
+
+.dk-div-container-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: clamp(16px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 24px clamp(16px, 4vw, 24px) 24px clamp(16px, 4vw, 24px);
+}
+
+.dk-div-row-itrow {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.dk-div-col-lleft {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+}
+
+.dk-button-new-peach-puff-collec-78236 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 40px;
+  background-color: #D4EDDA;
+  border-radius: 200px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-h1-your-daily-dose-of-dewy-82322 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 560px;
+  height: auto;
+  color: #4A3B39;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(37px, 4.44vw, 64px);
+  font-weight: 800;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-button-shop-the-glow-82312 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 54px;
+  background-color: #FFB7C5;
+  border-radius: 27px;
+  border: 1px solid transparent;
+}
+
+.dk-h3-clean-bouncy-skincare-f-82323 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 520px;
+  height: auto;
+  color: #4A3B39;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-div-col-right {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 580px;
+  height: auto;
+}
+
+.dk-img-hero-showcase-image-78237 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 580px;
+  aspect-ratio: 580 / 480;
+  height: auto;
+  background-image: url("https://images.pexels.com/photos/14535056/pexels-photo-14535056.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 40px;
+  border: 1px solid transparent;
+}
+
+
+/* ==================== SECTION: section#features — Features ==================== */
+
+.dk-section-features-features-msec2 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #FFFFFF;
+}
+
+.dk-div-container-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: clamp(16px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 24px clamp(16px, 4vw, 24px) 24px clamp(16px, 4vw, 24px);
+}
+
+.dk-h1-the-bouncy-essentials-82324 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 680px;
+  height: auto;
+  color: #4A3B39;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(22px, 2.50vw, 36px);
+  font-weight: 800;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-div-grid-2grid {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.dk-article-card-card1 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+}
+
+.dk-div-card-surface-78232 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FFFFFF;
+  border-radius: 32px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-img-card-1-image-78238 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 340 / 220;
+  height: auto;
+  background-image: url("https://images.pexels.com/photos/16667097/pexels-photo-16667097.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 24px;
+  border: 1px solid transparent;
+}
+
+.dk-h2-cloud-cleanser-82325 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 332px;
+  height: auto;
+  color: #4A3B39;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-a-gentle-marshmallow-foa-82326 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 332px;
+  height: auto;
+  color: #4A3B39;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-button-24-add-to-bag-82313 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 45px;
+  background-color: #F3E5E2;
+  border-radius: 21px;
+  border: 1px solid transparent;
+}
+
+.dk-article-card-card2 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+}
+
+.dk-div-card-surface-78233 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FFFFFF;
+  border-radius: 32px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-img-card-2-image-78239 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 340 / 220;
+  height: auto;
+  background-image: url("https://images.pexels.com/photos/17891765/pexels-photo-17891765.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 24px;
+  border: 1px solid transparent;
+}
+
+.dk-h2-melon-mist-82327 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 332px;
+  height: auto;
+  color: #4A3B39;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-instant-hydration-with-a-82328 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 332px;
+  height: auto;
+  color: #4A3B39;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-button-18-add-to-bag-82314 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 45px;
+  background-color: #D4EDDA;
+  border-radius: 21px;
+  border: 1px solid transparent;
+}
+
+.dk-article-card-card3 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+}
+
+.dk-div-card-surface-78234 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FFFFFF;
+  border-radius: 32px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-img-card-3-image-82310 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 340 / 220;
+  height: auto;
+  background-image: url("https://images.pexels.com/photos/6690234/pexels-photo-6690234.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 24px;
+  border: 1px solid transparent;
+}
+
+.dk-h2-moonlight-mask-82329 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 332px;
+  height: auto;
+  color: #4A3B39;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-sleep-your-way-to-a-brig-82330 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 332px;
+  height: auto;
+  color: #4A3B39;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-button-32-add-to-bag-82315 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 45px;
+  background-color: #F3E5E2;
+  border-radius: 21px;
+  border: 1px solid transparent;
+}
+
+
+/* ==================== SECTION: section#cta — Call to Action ==================== */
+
+.dk-section-cta-call-to-action-msec3 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #FFFFFF;
+}
+
+.dk-div-section-bg-78235 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FFB7C5;
+  border-radius: 40px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-div-container-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: clamp(16px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 24px clamp(16px, 4vw, 24px) 24px clamp(16px, 4vw, 24px);
+}
+
+.dk-div-row-itrow {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 960px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.dk-div-col-lleft {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+}
+
+.dk-h1-join-the-mochi-glow-club-82331 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 600px;
+  height: auto;
+  color: #111111;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(23px, 2.78vw, 40px);
+  font-weight: 800;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-h3-get-15-off-your-first-o-82332 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 500px;
+  height: auto;
+  color: #111111;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-div-col-right {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+}
+
+.dk-button-subscribe-now-82316 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 58px;
+  background-color: #FFFFFF;
+  border-radius: 30px;
+  border: 1px solid transparent;
+}
+
+/* ========================================================================== */
+/* ROOT ARTBOARD: main — Artboard / Vela Studio Landing (1440x2240px) */
+/* ========================================================================== */
+
+.dk-main-artboard-vela-studio-landing-55637 {
+  --dk-design-width: 1440;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0px;
+  overflow-x: clip;
+  background-color: #FFFFFF;
+}
+
+
+/* ==================== SECTION: header — Navbar ==================== */
+
+.dk-header-navbar-eader {
+  position: sticky !important;
+  top: 0 !important;
+  left: 0;
+  width: 100%;
+  min-height: 80px;
+  z-index: 1000 !important;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0px clamp(16px, 4vw, 24px);
+  background-color: #FFFFFF;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
+.dk-div-section-bg-56371 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-nav-container-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: clamp(16px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 16px clamp(16px, 4vw, 16px) 16px clamp(16px, 4vw, 16px);
+}
+
+.dk-div-row-avrow {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+}
+
+.dk-a-brand-vela-studio-63719 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #111111;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-a-nav-link-shop-all-63720 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #111111;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: center;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-a-nav-link-new-arrivals-63721 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #111111;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-a-nav-link-journal-63722 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #111111;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-button-cart-0-63713 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 45px;
+  background-color: #1A1A1A;
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+
+
+/* ==================== SECTION: section#hero — Hero ==================== */
+
+.dk-section-hero-hero-msec1 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #FFFFFF;
+}
+
+.dk-div-container-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: clamp(16px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 24px clamp(16px, 4vw, 24px) 24px clamp(16px, 4vw, 24px);
+}
+
+.dk-div-grid-2grid {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+}
+
+.dk-img-hero-showcase-image-56378 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 540px;
+  aspect-ratio: 540 / 680;
+  height: auto;
+  background-image: url("https://images.pexels.com/photos/8801149/pexels-photo-8801149.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 12px;
+  border: 1px solid transparent;
+}
+
+.dk-h1-carry-the-moment-63724 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 640px;
+  height: auto;
+  color: #111111;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(46px, 5.56vw, 80px);
+  font-weight: 900;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-h3-sculptural-forms-and-vib-63725 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 520px;
+  height: auto;
+  color: #444444;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-button-shop-the-drop-63714 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 58px;
+  background-color: #1A1A1A;
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+
+.dk-button-summer-drop-24-56376 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 40px;
+  background-color: #FF4D00;
+  border-radius: 200px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-h1-the-core-series-63726 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 600px;
+  height: auto;
+  color: #111111;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(23px, 2.78vw, 40px);
+  font-weight: 900;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-div-grid-4grid {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.dk-article-card-card1 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+}
+
+.dk-div-card-surface-56372 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #F9F9F9;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-img-card-image-1-56379 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 340 / 340;
+  height: auto;
+  background-image: url("https://images.pexels.com/photos/26954381/pexels-photo-26954381.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 8px;
+  border: 1px solid transparent;
+}
+
+.dk-h2-the-sculpt-tote-63727 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 340px;
+  height: auto;
+  color: #111111;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-495-00-63728 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #666666;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-button-add-to-bag-63715 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 45px;
+  background-color: #1A1A1A;
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+
+.dk-article-card-card2 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+}
+
+.dk-div-card-surface-56373 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #F9F9F9;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-img-card-image-2-63710 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 340 / 340;
+  height: auto;
+  background-image: url("https://images.pexels.com/photos/26954371/pexels-photo-26954371.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 8px;
+  border: 1px solid transparent;
+}
+
+.dk-h2-the-curve-mini-63729 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 340px;
+  height: auto;
+  color: #111111;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-320-00-63730 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #666666;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-button-add-to-bag-63716 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 45px;
+  background-color: #1A1A1A;
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+
+.dk-article-card-card3 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+}
+
+.dk-div-card-surface-56374 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #F9F9F9;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-img-card-image-3-63711 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 340 / 340;
+  height: auto;
+  background-image: url("https://images.pexels.com/photos/27046147/pexels-photo-27046147.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 8px;
+  border: 1px solid transparent;
+}
+
+.dk-h2-the-horizon-clutch-63731 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 340px;
+  height: auto;
+  color: #111111;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-275-00-63732 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #666666;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-button-add-to-bag-63717 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 45px;
+  background-color: #1A1A1A;
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+
+
+/* ==================== SECTION: section#cta — Call to Action ==================== */
+
+.dk-section-cta-call-to-action-msec2 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #FFFFFF;
+}
+
+.dk-div-section-bg-56375 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #1A1A1A;
+  border-radius: 24px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-div-container-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: clamp(16px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 24px clamp(16px, 4vw, 24px) 24px clamp(16px, 4vw, 24px);
+}
+
+.dk-div-row-itrow {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1110px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.dk-div-col-lleft {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+}
+
+.dk-img-bento-detail-image-63712 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 500 / 400;
+  height: auto;
+  background-image: url("https://images.pexels.com/photos/8801079/pexels-photo-8801079.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 16px;
+  border: 1px solid transparent;
+}
+
+.dk-div-col-right {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+}
+
+.dk-h1-uncompromising-craft-63733 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 560px;
+  height: auto;
+  color: #FFFFFF;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(28px, 3.33vw, 48px);
+  font-weight: 900;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-h3-every-vela-bag-is-born-f-63734 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 520px;
+  height: auto;
+  color: #AAAAAA;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-button-our-process-63718 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 56px;
+  background-color: #FF4D00;
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+
+
+/* ==================== SECTION: footer — Site Footer ==================== */
+
+.dk-footer-site-footer-ooter {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #FFFFFF;
+}
+
+.dk-div-section-bg-56377 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #E5E5E5;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-div-container-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: clamp(16px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 24px clamp(16px, 4vw, 24px) 24px clamp(16px, 4vw, 24px);
+}
+
+.dk-div-row-errow {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+}
+
+.dk-p-2024-vela-studio-all-63735 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 400px;
+  height: auto;
+  color: #999999;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-instagram-tiktok-pin-63736 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #111111;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+/* ========================================================================== */
+/* ROOT ARTBOARD: main — Artboard / Desktop (1440x2300px) */
+/* ========================================================================== */
+
+.dk-main-artboard-desktop-89536 {
+  --dk-design-width: 1440;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0px;
+  overflow-x: clip;
+  background-color: #FAF9F6;
+}
+
+
+/* ==================== SECTION: header — Navbar ==================== */
+
+.dk-header-navbar-eader {
+  position: sticky !important;
+  top: 0 !important;
+  left: 0;
+  width: 100%;
+  min-height: 80px;
+  z-index: 1000 !important;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0px clamp(16px, 4vw, 24px);
+  background-color: #FFFFFF;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
+.dk-div-section-bg-95361 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FAF9F6;
+  border-radius: 16px;
+  border: 1px solid #E5E5E5;
+}
+
+.dk-nav-container-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 16px clamp(16px, 4vw, 16px) 16px clamp(16px, 4vw, 16px);
+}
+
+.dk-div-row-avrow {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+}
+
+.dk-a-brand-aurelia-53619 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #121212;
+  font-family: 'DM Serif Display', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(22px, 1.94vw, 28px);
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-a-nav-link-shop-53620 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #121212;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: center;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-a-nav-link-collections-53621 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #121212;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-a-nav-link-journal-53622 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #121212;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-input-search-53617 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #121212;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: center;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-div-icon-badge-53615 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 24px;
+  height: auto;
+  background-color: #9E7D63;
+  border-radius: 50%;
+  border: 1.5px solid #CBD5E1;
+}
+
+.dk-svg-icon-53618 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #121212;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: center;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+
+/* ==================== SECTION: section#hero — Hero ==================== */
+
+.dk-section-hero-hero-msec1 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #FFFFFF;
+}
+
+.dk-div-container-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 24px clamp(16px, 4vw, 24px) 24px clamp(16px, 4vw, 24px);
+}
+
+.dk-div-row-itrow {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.dk-div-col-lleft {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 725px;
+  height: auto;
+}
+
+.dk-img-hero-image-95369 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 720px;
+  aspect-ratio: 720 / 720;
+  height: auto;
+  background-image: url("https://images.pexels.com/photos/40072817/pexels-photo-40072817.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 14px;
+  border: 1px solid transparent;
+}
+
+.dk-button-maxi-95364 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 120px;
+  max-width: 100%;
+  min-height: 40px;
+  background-color: #121212;
+  border-radius: 200px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-button-midi-95365 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 120px;
+  max-width: 100%;
+  min-height: 40px;
+  background-color: #FFFFFF;
+  border-radius: 200px;
+  border: 1px solid #121212;
+}
+
+.dk-button-slip-dresses-95366 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 140px;
+  max-width: 100%;
+  min-height: 40px;
+  background-color: #FFFFFF;
+  border-radius: 200px;
+  border: 1px solid #121212;
+}
+
+.dk-button-evening-95367 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 140px;
+  max-width: 100%;
+  min-height: 40px;
+  background-color: #FFFFFF;
+  border-radius: 200px;
+  border: 1px solid #121212;
+}
+
+.dk-img-product-1-image-53610 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 310px;
+  aspect-ratio: 310 / 413;
+  height: auto;
+  background-image: url("https://images.pexels.com/photos/34998750/pexels-photo-34998750.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 14px;
+  border: 1px solid transparent;
+}
+
+.dk-img-product-2-image-53611 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 310px;
+  aspect-ratio: 310 / 413;
+  height: auto;
+  background-image: url("https://images.pexels.com/photos/4554218/pexels-photo-4554218.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 14px;
+  border: 1px solid transparent;
+}
+
+.dk-p-isabella-silk-slip-53630 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #121212;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-elena-linen-midi-53632 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #121212;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-295-00-53631 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #9E7D63;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-240-00-53633 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #9E7D63;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-div-col-right {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 731px;
+  height: auto;
+}
+
+.dk-h1-the-poetry-of-silhouette-53623 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 560px;
+  height: auto;
+  color: #121212;
+  font-family: 'DM Serif Display', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(37px, 4.44vw, 64px);
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-h3-discover-our-summer-24-53624 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 480px;
+  height: auto;
+  color: #121212;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-button-shop-dresses-53616 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 160px;
+  max-width: 100%;
+  min-height: 56px;
+  background-color: #121212;
+  border-radius: 12px;
+  border: 1px solid transparent;
+}
+
+.dk-button-linen-95368 {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  min-width: 120px;
+  max-width: 100%;
+  min-height: 40px;
+  background-color: #FFFFFF;
+  border-radius: 200px;
+  border: 1px solid #121212;
+}
+
+.dk-img-product-3-image-53612 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 310px;
+  aspect-ratio: 310 / 413;
+  height: auto;
+  background-image: url("https://images.pexels.com/photos/40675418/pexels-photo-40675418.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 14px;
+  border: 1px solid transparent;
+}
+
+.dk-img-product-4-image-53613 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 310px;
+  aspect-ratio: 310 / 413;
+  height: auto;
+  background-image: url("https://images.pexels.com/photos/40605410/pexels-photo-40605410.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 14px;
+  border: 1px solid transparent;
+}
+
+.dk-p-seraphina-gown-53634 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #121212;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-luna-crochet-mini-53636 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #121212;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-450-00-53635 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #9E7D63;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-185-00-53637 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 320px;
+  height: auto;
+  color: #9E7D63;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+
+/* ==================== SECTION: section#cta — Call to Action ==================== */
+
+.dk-section-cta-call-to-action-msec2 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #FFFFFF;
+}
+
+.dk-div-section-bg-95362 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-div-container-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: clamp(16px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 24px clamp(16px, 4vw, 24px) 24px clamp(16px, 4vw, 24px);
+}
+
+.dk-div-row-itrow {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.dk-div-col-lleft {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+}
+
+.dk-img-showcase-image-53614 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 640px;
+  aspect-ratio: 640 / 480;
+  height: auto;
+  background-image: url("https://images.pexels.com/photos/8465935/pexels-photo-8465935.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 14px;
+  border: 1px solid transparent;
+}
+
+.dk-div-col-right {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+}
+
+.dk-h1-crafted-with-intent-53638 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 520px;
+  height: auto;
+  color: #121212;
+  font-family: 'DM Serif Display', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(22px, 2.22vw, 32px);
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-p-each-piece-is-handmade-i-53639 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 480px;
+  height: auto;
+  color: #121212;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+
+/* ==================== SECTION: footer — Site Footer ==================== */
+
+.dk-footer-site-footer-ooter {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #FFFFFF;
+}
+
+.dk-div-section-bg-95363 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #121212;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+}
+
+.dk-div-container-ainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: clamp(16px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 24px clamp(16px, 4vw, 24px) 24px clamp(16px, 4vw, 24px);
+}
+
+.dk-div-row-errow {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+}
+
+.dk-p-2024-aurelia-studio-a-53640 {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  max-width: 400px;
+  height: auto;
+  color: #111111;
+  font-family: 'Inter', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+/* ========================================================================== */
+/* ROOT ARTBOARD: Instagram Post (1:1) Artboard (1080x1080px) */
+/* ========================================================================== */
+
+.dk-instagram-post-1-1-artboard-10198 {
+  --dk-design-width: 1080;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: clip;
+  background-color: #FFFFFF;
+}
+
+.dk-bouncy-cushiony-skin-made-l-r1zed {
+  position: absolute;
+  left: 277px;
+  top: 76px;
+  width: 560px;
+  height: 189px;
+  color: #2C2126;
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(30px, 3.61vw, 52px);
+  font-weight: 800;
+  line-height: 1.45;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.dk-hero-model-image-j53tb {
+  position: absolute;
+  left: 175px;
+  top: 363px;
+  width: 730px;
+  height: 584px;
+  background-image: url("https://images.pexels.com/photos/4920513/pexels-photo-4920513.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 32px;
+  border: 1px solid transparent;
+}
+
+
+/* ==================== SECTION: Hero / CTA Primary ==================== */
+
+.dk-hero-cta-primary-yd04i {
+  position: absolute;
+  left: 440px;
+  top: 978px;
+  width: 200px;
+  height: 52px;
+  background-color: #FF5E86;
+  border-radius: 200px;
+  border: 1px solid transparent;
+  overflow: hidden;
+}
+
+/* Responsive Breakpoints (TAB <= 1024px & MOB <= 768px) */
+@media (max-width: 1024px) {
+  .dk-interactive-btn,
+  .dk-interactive-input {
+    min-height: 40px;
+  }
+  .dk-mobile-menu-btn {
+    display: inline-flex;
+    margin-left: auto;
+  }
+  [data-dk-navbar="true"] nav,
+  [data-dk-navbar="true"] .dk-interactive-link,
+  [data-dk-navbar="true"] .dk-interactive-btn:not(.dk-mobile-menu-btn),
+  [data-dk-navbar="true"] [data-auto-layout="horizontal"] > a.dk-interactive-link {
+    display: none !important;
+  }
+  [data-dk-navbar="true"].dk-mobile-nav-open nav,
+  [data-dk-navbar="true"].dk-mobile-nav-open [data-auto-layout="horizontal"] > a.dk-interactive-link {
+    display: flex !important;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 10px;
+  }
+  [data-dk-navbar="true"] + section,
+  header + section,
+  nav + section {
+    margin-top: 40px !important;
+  }
+  section > div,
+  section > [data-auto-layout] {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  [data-auto-layout="horizontal"]:not([data-dk-navbar="true"]) {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  [data-dk-navbar="true"] + section,
+  header + section,
+  nav + section {
+    margin-top: 40px !important;
+  }
+  section,
+  section > div,
+  section > [data-auto-layout] {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .dk-toast-notification {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+  </style>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body id="top">
+  <!-- ==========================================================================
+       DesignKoro Studio — Semantic Responsive Auto-Layout Root
+       Sections: <header> Navbar -> <section#hero> -> <section> Content -> <footer>
+       ========================================================================== -->
+  <div id="root">
+  <main class="dk-canvas-viewport">
+    <div id="main-app-screen-ai-design-screen-create-me-a-facebook-like-mobile" class="dk-root-frame dk-main-app-screen-ai-design-screen-create-me-a-facebook-like-mobile-29897" data-frame-name="main.app-screen — AI Design Screen: Create me a Facebook-like mobile" data-design-width="390" data-design-height="1969">
+      <!-- ==================== HEADER.APP-BAR — TOP BAR ==================== -->
+      <header data-dk-navbar="true" class="dk-sticky-navbar dk-header-app-bar-top-bar-eader" data-frame-name="header.app-bar — Top Bar">
+        <!-- Auto-Layout: nav.app-bar -->
+        <nav class="dk-nav-app-bar-ainer" data-frame-name="nav.app-bar">
+          <div class="dk-view-row-avrow" data-frame-name="View.row">
+            <a href="#main-app-screen-ai-design-screen-create-me-a-facebook-like-mobile" class="dk-interactive-link dk-text-title-create-me-a-facebook-lik-ape22">Create me a Facebook-like </a>
+            <img class="dk-image-avatar-avatar-ape33" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="Image.avatar (Avatar)" loading="lazy" style="object-fit: cover; display: block;" />
+          </div>
+        </nav>
+        <button type="button" class="dk-mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      </header>
+      <!-- ==================== SECTION#HERO — FEATURED CARD ==================== -->
+      <section id="hero" class="dk-section-hero-featured-card-msec1" data-frame-name="section#hero — Featured Card">
+        <div class="dk-view-section-bg-vasbg"></div>
+        <div class="dk-view-section-bg-ape00"></div>
+        <div class="dk-view-container-ainer" data-frame-name="View.container">
+          <input type="search" class="dk-interactive-input dk-searchbar-search-anything-ape44" name="searchbar-search-anything" placeholder="Search anything..." style="padding: 0 14px; font-size: 12px; color: #475569;  " />
+          <h3 class="dk-text-h3-featured-categories-ape66">Featured Categories</h3>
+          <div class="dk-view-grid-3grid" data-frame-name="View.grid">
+            <button type="button" class="dk-interactive-btn dk-button-overview-ape77" data-dk-action="Overview" data-dk-target="#button-overview" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px; color: #FFFFFF; border: none;"><span>Overview</span></button>
+            <button type="button" class="dk-interactive-btn dk-button-popular-ape88" data-dk-action="Popular" data-dk-target="#button-popular" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px; color: #FFFFFF; border: none;"><span>Popular</span></button>
+            <button type="button" class="dk-interactive-btn dk-button-saved-ape99" data-dk-action="Saved" data-dk-target="#button-saved" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px; color: #FFFFFF; border: none;"><span>Saved</span></button>
+          </div>
+          <div class="dk-view-row-r4row" data-frame-name="View.row">
+            <article class="dk-interactive-card dk-card-item-card1" data-frame-name="Card.item">
+              <div class="dk-view-card-surface-e1010"></div>
+              <img class="dk-image-preview-1-e1111" src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&amp;fit=crop&amp;w=1000&amp;q=80" alt="Image (Preview 1)" loading="lazy" style="object-fit: cover; display: block;" />
+              <p class="dk-text-body-primary-module-e1212">Primary Module</p>
+              <p class="dk-text-body-updated-today-e1313">Updated today</p>
+            </article>
+            <article class="dk-interactive-card dk-card-item-card2" data-frame-name="Card.item">
+              <div class="dk-view-card-surface-e1414"></div>
+              <img class="dk-image-preview-2-e1515" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&amp;fit=crop&amp;w=1000&amp;q=80" alt="Image (Preview 2)" loading="lazy" style="object-fit: cover; display: block;" />
+              <p class="dk-text-body-analytics-hub-e1616">Analytics Hub</p>
+              <p class="dk-text-body-active-status-e1717">Active status</p>
+            </article>
+          </div>
+          <button type="button" class="dk-interactive-btn dk-button-ios-system-blue-button-pm384" data-dk-action="Continue with Apple" data-dk-target="#continue-with-apple" style="border: none;">
+            <span class="dk-label-7nrgd">Continue with Apple</span>
+          </button>
+        </div>
+        <img class="dk-image-featured-banner-media-ape55" src="https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&amp;fit=crop&amp;w=1000&amp;q=80" alt="Image (Featured Banner Media)" loading="lazy" style="object-fit: cover; display: block;" />
+      </section>
+      <!-- ==================== NAV.TAB-BAR — BOTTOM TABBAR ==================== -->
+      <header data-dk-navbar="true" class="dk-sticky-navbar dk-nav-tab-bar-bottom-tabbar-ooter" data-frame-name="nav.tab-bar — Bottom TabBar">
+        <div class="dk-view-section-bg-e1919"></div>
+        <div class="dk-view-container-ainer" data-frame-name="View.container">
+          <div class="dk-view-row-errow" data-frame-name="View.row">
+</div>
+        </div>
+        <article class="dk-interactive-card dk-view-section-bg-0jact" data-frame-name="View.section-bg">
+          <a href="#home" class="dk-interactive-link dk-home-tab-vrloq">⌂
+Home</a>
+          <a href="#searchbar-search-anything" class="dk-interactive-link dk-search-tab-xng7l">⌕
+Search</a>
+          <a href="#library" class="dk-interactive-link dk-library-tab-pak3a">❐
+Library</a>
+          <a href="#profile" class="dk-interactive-link dk-profile-tab-vauqd">☺
+Profile</a>
+        </article>
+        <button type="button" class="dk-mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      </header>
+    </div>
+
+    <div id="main-artboard-dewpuff-landing" class="dk-root-frame dk-main-artboard-dewpuff-landing-49096" data-frame-name="main — Artboard / DewPuff Landing" data-design-width="1440" data-design-height="2200">
+      <!-- ==================== HEADER — NAVBAR ==================== -->
+      <header data-dk-navbar="true" class="dk-sticky-navbar dk-header-navbar-eader" data-frame-name="header — Navbar">
+        <div class="dk-div-section-bg-90961"></div>
+        <!-- Auto-Layout: nav.container -->
+        <nav class="dk-nav-container-ainer" data-frame-name="nav.container">
+          <!-- Auto-Layout: div.row -->
+          <div class="dk-div-row-avrow" data-frame-name="div.row">
+            <h2 class="dk-a-brand-dewpuff-09625">dewpuff.</h2>
+            <a href="#bestsellers" class="dk-interactive-link dk-a-nav-link-bestsellers-09626">Bestsellers</a>
+            <a href="#jelly-routine" class="dk-interactive-link dk-a-nav-link-jelly-routine-09627">Jelly Routine</a>
+            <a href="#ingredient-lab" class="dk-interactive-link dk-a-nav-link-ingredient-lab-09628">Ingredient Lab</a>
+            <a href="#skin-quiz" class="dk-interactive-link dk-a-nav-link-skin-quiz-09629">Skin Quiz</a>
+            <button type="button" class="dk-interactive-btn dk-button-tote-bag-2-09617" data-dk-action="Tote Bag (2)" data-dk-target="#button-tote-bag-2" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #FFFFFF; border: 1px solid transparent;"><span>Tote Bag (2)</span></button>
+          </div>
+        </nav>
+        <button type="button" class="dk-mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      </header>
+      <!-- ==================== SECTION#HERO — HERO ==================== -->
+      <section id="hero" class="dk-section-hero-hero-msec1" data-frame-name="section#hero — Hero">
+        <!-- Auto-Layout: div.container -->
+        <div class="dk-div-container-ainer" data-frame-name="div.container">
+          <!-- Auto-Layout: div.row -->
+          <div class="dk-div-row-itrow" data-frame-name="div.row">
+            <!-- Auto-Layout: div.col -->
+            <div class="dk-div-col-right" data-frame-name="div.col">
+              <div class="dk-div-card-surface-90962"></div>
+              <img class="dk-img-hero-model-image-09612" src="https://images.pexels.com/photos/4920513/pexels-photo-4920513.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="img (Hero / Model Image)" loading="lazy" style="object-fit: cover; display: block;" />
+              <!-- Auto-Layout: article.card -->
+              <article class="dk-article-card-card3" data-frame-name="article.card">
+                <div class="dk-div-card-surface-90968"></div>
+                <h3 class="dk-h3-hydra-puff-cream-09637">Hydra-Puff Cream</h3>
+                <p class="dk-p-voted-1-best-barrier-wh-09638">Voted #1 Best Barrier Whip 2024</p>
+              </article>
+            </div>
+            <!-- Auto-Layout: div.col -->
+            <div class="dk-div-col-lleft" data-frame-name="div.col">
+              <button type="button" class="dk-interactive-btn dk-button-cloudy-peptide-formula-2-90969" data-dk-action="CLOUDY PEPTIDE FORMULA 2.0" data-dk-target="#cloudy-peptide-formula-2-0" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; color: #FF5E86; border: 1px solid #FFD7E2;"><span>CLOUDY PEPTIDE FORMULA 2.0</span></button>
+              <h1 class="dk-h1-bouncy-cushiony-skin-ma-09631">Bouncy, cushiony skin made lovingly cute.</h1>
+              <p class="dk-p-whipped-ceramide-clouds-09632">Whipped ceramide clouds and strawberry moisture glazes tailored for soft, happy faces. Zero tackiness, 100% barrier bliss.</p>
+              <button type="button" class="dk-interactive-btn dk-button-shop-dew-drops-09618" data-dk-action="Shop Dew Drops" data-dk-target="#button-shop-dew-drops" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #FFFFFF; border: 1px solid transparent;"><span>Shop Dew Drops</span></button>
+              <input type="text" class="dk-interactive-input dk-input-find-my-match-09619" name="input-find-my-match" placeholder="Find My Match" style="padding: 0 14px; font-size: 14px; color: #2C2126;  " />
+              <!-- Auto-Layout: article.card -->
+              <article class="dk-article-card-card6" data-frame-name="article.card">
+                <div class="dk-div-card-surface-09610"></div>
+                <h2 class="dk-h2-98-09633">98%</h2>
+                <p class="dk-p-plumper-barrier-09634">Plumper barrier</p>
+              </article>
+              <!-- Auto-Layout: article.card -->
+              <article class="dk-article-card-card7" data-frame-name="article.card">
+                <div class="dk-div-card-surface-09611"></div>
+                <h2 class="dk-h2-4-95-09635">4.95 ★</h2>
+                <p class="dk-p-24k-cute-reviews-09636">24k+ cute reviews</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ==================== SECTION#FEATURES — FEATURES ==================== -->
+      <section id="features" class="dk-section-features-features-msec2" data-frame-name="section#features — Features">
+        <!-- Auto-Layout: div.container -->
+        <div class="dk-div-container-ainer" data-frame-name="div.container">
+          <h1 class="dk-h1-cult-favorites-for-plush-09639">Cult favorites for plush, smiling skin</h1>
+          <!-- Auto-Layout: div.grid -->
+          <div class="dk-div-grid-3grid" data-frame-name="div.grid">
+            <!-- Auto-Layout: article.card -->
+            <article class="dk-interactive-card dk-article-card-card1" data-frame-name="article.card">
+              <div class="dk-div-card-surface-90963"></div>
+              <img class="dk-img-card-1-image-09613" src="https://images.pexels.com/photos/9246304/pexels-photo-9246304.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="img (Card 1 / Image)" loading="lazy" style="object-fit: cover; display: block;" />
+              <p class="dk-p-jelly-wash-24-09641">JELLY WASH • $24</p>
+              <h3 class="dk-h3-berry-melt-gel-cleanser-09642">Berry Melt Gel Cleanser</h3>
+              <button type="button" class="dk-interactive-btn dk-button-quick-add-09620" data-dk-action="+ Quick Add" data-dk-target="#button-quick-add" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #FF5E86; border: 1.5px solid #FFD7E2;"><span>+ Quick Add</span></button>
+              <p class="dk-p-transformative-pudding-j-09643">Transformative pudding jelly that melts away sunscreen without stripping your natural lipids.</p>
+            </article>
+            <!-- Auto-Layout: article.card -->
+            <article class="dk-interactive-card dk-article-card-card2" data-frame-name="article.card">
+              <div class="dk-div-card-surface-90964"></div>
+              <img class="dk-img-card-2-image-09614" src="https://images.pexels.com/photos/9775170/pexels-photo-9775170.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="img (Card 2 / Image)" loading="lazy" style="object-fit: cover; display: block;" />
+              <p class="dk-p-barrier-serum-32-09644">BARRIER SERUM • $32</p>
+              <h3 class="dk-h3-dew-glaze-barrier-drops-09645">Dew Glaze Barrier Drops</h3>
+              <button type="button" class="dk-interactive-btn dk-button-quick-add-09621" data-dk-action="+ Quick Add" data-dk-target="#button-quick-add" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #FFFFFF; border: 1px solid transparent;"><span>+ Quick Add</span></button>
+              <p class="dk-p-infused-with-5-niacinam-09646">Infused with 5% niacinamide, snow mushroom, and peptide pearls for an instant reflective glow.</p>
+            </article>
+            <!-- Auto-Layout: article.card -->
+            <article class="dk-interactive-card dk-article-card-card3" data-frame-name="article.card">
+              <div class="dk-div-card-surface-90965"></div>
+              <img class="dk-img-card-3-image-09615" src="https://images.pexels.com/photos/5938246/pexels-photo-5938246.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="img (Card 3 / Image)" loading="lazy" style="object-fit: cover; display: block;" />
+              <p class="dk-p-hydration-whip-29-09647">HYDRATION WHIP • $29</p>
+              <h3 class="dk-h3-cloud-pillow-ceramide-po-09648">Cloud Pillow Ceramide Pod</h3>
+              <button type="button" class="dk-interactive-btn dk-button-quick-add-09622" data-dk-action="+ Quick Add" data-dk-target="#button-quick-add" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #FF5E86; border: 1.5px solid #FFD7E2;"><span>+ Quick Add</span></button>
+              <p class="dk-p-air-whipped-souffl-crea-09649">Air-whipped soufflé cream locking in 72 hours of dewy hydration inside a refillable bubble pod.</p>
+            </article>
+          </div>
+          <p class="dk-p-crafted-with-whipped-mar-09640">Crafted with whipped marsh-root, triple plant ceramides, and fermented berry nectar.</p>
+        </div>
+      </section>
+      <!-- ==================== SECTION#SHOWCASE — SHOWCASE ==================== -->
+      <section id="showcase" class="dk-section-showcase-showcase-msec3" data-frame-name="section#showcase — Showcase">
+        <div class="dk-div-section-bg-90966"></div>
+        <!-- Auto-Layout: div.container -->
+        <div class="dk-div-container-ainer" data-frame-name="div.container">
+          <!-- Auto-Layout: div.row -->
+          <div class="dk-div-row-itrow" data-frame-name="div.row">
+            <!-- Auto-Layout: div.col -->
+            <div class="dk-div-col-lleft" data-frame-name="div.col">
+              <img class="dk-img-showcase-lifestyle-i-09616" src="https://images.pexels.com/photos/9774961/pexels-photo-9774961.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="img (Showcase / Lifestyle I)" loading="lazy" style="object-fit: cover; display: block;" />
+            </div>
+            <!-- Auto-Layout: div.col -->
+            <div class="dk-div-col-right" data-frame-name="div.col">
+              <p class="dk-p-the-dewpuff-promise-09650">THE DEWPUFF PROMISE</p>
+              <h1 class="dk-h1-gentle-on-sensitive-skin-09651">Gentle on sensitive skin. Serious about barrier health.</h1>
+              <p class="dk-p-triple-fermented-pept-09652">🌸  Triple-Fermented Peptides for instant 3x bouncy elasticity</p>
+              <p class="dk-p-zero-pore-clogging-wa-09653">🫧  Zero pore-clogging waxes, artificial dyes, or strong perfumes</p>
+              <p class="dk-p-100-vegan-peta-crue-09654">🌱  100% Vegan, PETA cruelty-free, and refillable packaging</p>
+              <button type="button" class="dk-interactive-btn dk-button-read-the-clinical-test-09623" data-dk-action="Read The Clinical Test" data-dk-target="#button-read-the-clinical-test" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #FFFFFF; border: 1px solid transparent;"><span>Read The Clinical Test</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ==================== SECTION#CTA — CALL TO ACTION ==================== -->
+      <section id="cta" class="dk-section-cta-call-to-action-msec4" data-frame-name="section#cta — Call to Action">
+        <div class="dk-div-section-bg-90967"></div>
+        <!-- Auto-Layout: div.container -->
+        <div class="dk-div-container-ainer" data-frame-name="div.container">
+          <!-- Auto-Layout: div.grid -->
+          <div class="dk-div-grid-1grid" data-frame-name="div.grid">
+            <h1 class="dk-h1-ready-for-your-happiest-09655">Ready for your happiest, bounciest skin?</h1>
+            <button type="button" class="dk-interactive-btn dk-button-get-15-off-my-glow-09624" data-dk-action="Get 15% Off My Glow" data-dk-target="#button-get-15-off-my-glow" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #FF5E86; border: 1px solid transparent;"><span>Get 15% Off My Glow</span></button>
+            <p class="dk-p-join-our-club-and-get-15-09656">Join our club and get 15% off your first whipped routine box.</p>
+          </div>
+        </div>
+      </section>
+      <!-- ==================== FOOTER — SITE FOOTER ==================== -->
+      <footer class="dk-footer-site-footer-ooter" data-frame-name="footer — Site Footer">
+        <!-- Auto-Layout: div.container -->
+        <div class="dk-div-container-ainer" data-frame-name="div.container">
+          <!-- Auto-Layout: div.row -->
+          <div class="dk-div-row-errow" data-frame-name="div.row">
+            <p class="dk-p-2025-dewpuff-lab-inc-09657">© 2025 DewPuff Lab Inc. Made for cute glowing faces.</p>
+            <p class="dk-p-dermatologist-tested-c-09658">Dermatologist Tested • Cruelty-Free • Recyclable • TikTok @dewpuff</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <div id="main-artboard-landing-page" class="dk-root-frame dk-main-artboard-landing-page-27823" data-frame-name="main — Artboard / Landing Page" data-design-width="1440" data-design-height="1800">
+      <!-- ==================== HEADER — NAVBAR ==================== -->
+      <header data-dk-navbar="true" class="dk-sticky-navbar dk-header-navbar-eader" data-frame-name="header — Navbar">
+        <div class="dk-div-section-bg-78231"></div>
+        <!-- Auto-Layout: nav.container -->
+        <nav class="dk-nav-container-ainer" data-frame-name="nav.container">
+          <!-- Auto-Layout: div.row -->
+          <div class="dk-div-row-avrow" data-frame-name="div.row">
+            <h2 class="dk-a-brand-mochi-skin-82317">Mochi Skin</h2>
+            <a href="#shop-all" class="dk-interactive-link dk-a-nav-link-shop-all-82318">Shop All</a>
+            <a href="#rituals" class="dk-interactive-link dk-a-nav-link-rituals-82319">Rituals</a>
+            <a href="#about" class="dk-interactive-link dk-a-nav-link-our-story-82320">Our Story</a>
+            <button type="button" class="dk-interactive-btn dk-button-cart-0-82311" data-dk-action="Cart (0)" data-dk-target="#button-cart-0" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #FFFFFF; border: 1px solid transparent;"><span>Cart (0)</span></button>
+          </div>
+        </nav>
+        <button type="button" class="dk-mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      </header>
+      <!-- ==================== SECTION#HERO — HERO ==================== -->
+      <section id="hero" class="dk-section-hero-hero-msec1" data-frame-name="section#hero — Hero">
+        <!-- Auto-Layout: div.container -->
+        <div class="dk-div-container-ainer" data-frame-name="div.container">
+          <!-- Auto-Layout: div.row -->
+          <div class="dk-div-row-itrow" data-frame-name="div.row">
+            <!-- Auto-Layout: div.col -->
+            <div class="dk-div-col-lleft" data-frame-name="div.col">
+              <button type="button" class="dk-interactive-btn dk-button-new-peach-puff-collec-78236" data-dk-action="✨ NEW: PEACH PUFF COLLECTION" data-dk-target="#new-peach-puff-collection" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color: #4A3B39; border: 1px solid #E2E8F0;"><span>✨ NEW: PEACH PUFF COLLECTION</span></button>
+              <h1 class="dk-h1-your-daily-dose-of-dewy-82322">Your Daily Dose of Dewy Joy.</h1>
+              <button type="button" class="dk-interactive-btn dk-button-shop-the-glow-82312" data-dk-action="Shop the Glow" data-dk-target="#button-shop-the-glow" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #FFFFFF; border: 1px solid transparent;"><span>Shop the Glow</span></button>
+              <h3 class="dk-h3-clean-bouncy-skincare-f-82323">Clean, bouncy skincare formulated to make your face feel as soft as a mochi. Gentle on you, kind to the planet.</h3>
+            </div>
+            <!-- Auto-Layout: div.col -->
+            <div class="dk-div-col-right" data-frame-name="div.col">
+              <img class="dk-img-hero-showcase-image-78237" src="https://images.pexels.com/photos/14535056/pexels-photo-14535056.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="img (Hero / Showcase Image)" loading="lazy" style="object-fit: cover; display: block;" />
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ==================== SECTION#FEATURES — FEATURES ==================== -->
+      <section id="features" class="dk-section-features-features-msec2" data-frame-name="section#features — Features">
+        <!-- Auto-Layout: div.container -->
+        <div class="dk-div-container-ainer" data-frame-name="div.container">
+          <h1 class="dk-h1-the-bouncy-essentials-82324">The Bouncy Essentials</h1>
+          <!-- Auto-Layout: div.grid -->
+          <div class="dk-div-grid-2grid" data-frame-name="div.grid">
+            <!-- Auto-Layout: article.card -->
+            <article class="dk-interactive-card dk-article-card-card1" data-frame-name="article.card">
+              <div class="dk-div-card-surface-78232"></div>
+              <img class="dk-img-card-1-image-78238" src="https://images.pexels.com/photos/16667097/pexels-photo-16667097.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="img (Card 1 / Image)" loading="lazy" style="object-fit: cover; display: block;" />
+              <h2 class="dk-h2-cloud-cleanser-82325">Cloud Cleanser</h2>
+              <p class="dk-p-a-gentle-marshmallow-foa-82326">A gentle marshmallow foam that melts away stress and impurities.</p>
+              <button type="button" class="dk-interactive-btn dk-button-24-add-to-bag-82313" data-dk-action="$24 — Add to Bag" data-dk-target="#button-24-add-to-bag" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #4A3B39; border: 1px solid transparent;"><span>$24 — Add to Bag</span></button>
+            </article>
+            <!-- Auto-Layout: article.card -->
+            <article class="dk-interactive-card dk-article-card-card2" data-frame-name="article.card">
+              <div class="dk-div-card-surface-78233"></div>
+              <img class="dk-img-card-2-image-78239" src="https://images.pexels.com/photos/17891765/pexels-photo-17891765.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="img (Card 2 / Image)" loading="lazy" style="object-fit: cover; display: block;" />
+              <h2 class="dk-h2-melon-mist-82327">Melon Mist</h2>
+              <p class="dk-p-instant-hydration-with-a-82328">Instant hydration with a cooling watermelon extract for hot days.</p>
+              <button type="button" class="dk-interactive-btn dk-button-18-add-to-bag-82314" data-dk-action="$18 — Add to Bag" data-dk-target="#button-18-add-to-bag" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #4A3B39; border: 1px solid transparent;"><span>$18 — Add to Bag</span></button>
+            </article>
+            <!-- Auto-Layout: article.card -->
+            <article class="dk-interactive-card dk-article-card-card3" data-frame-name="article.card">
+              <div class="dk-div-card-surface-78234"></div>
+              <img class="dk-img-card-3-image-82310" src="https://images.pexels.com/photos/6690234/pexels-photo-6690234.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="img (Card 3 / Image)" loading="lazy" style="object-fit: cover; display: block;" />
+              <h2 class="dk-h2-moonlight-mask-82329">Moonlight Mask</h2>
+              <p class="dk-p-sleep-your-way-to-a-brig-82330">Sleep your way to a brighter morning with our overnight repair mask.</p>
+              <button type="button" class="dk-interactive-btn dk-button-32-add-to-bag-82315" data-dk-action="$32 — Add to Bag" data-dk-target="#button-32-add-to-bag" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #4A3B39; border: 1px solid transparent;"><span>$32 — Add to Bag</span></button>
+            </article>
+          </div>
+        </div>
+      </section>
+      <!-- ==================== SECTION#CTA — CALL TO ACTION ==================== -->
+      <section id="cta" class="dk-section-cta-call-to-action-msec3" data-frame-name="section#cta — Call to Action">
+        <div class="dk-div-section-bg-78235"></div>
+        <!-- Auto-Layout: div.container -->
+        <div class="dk-div-container-ainer" data-frame-name="div.container">
+          <!-- Auto-Layout: div.row -->
+          <div class="dk-div-row-itrow" data-frame-name="div.row">
+            <!-- Auto-Layout: div.col -->
+            <div class="dk-div-col-lleft" data-frame-name="div.col">
+              <h1 class="dk-h1-join-the-mochi-glow-club-82331">Join the Mochi Glow Club</h1>
+              <h3 class="dk-h3-get-15-off-your-first-o-82332">Get 15% off your first order and sweet skincare tips.</h3>
+            </div>
+            <!-- Auto-Layout: div.col -->
+            <div class="dk-div-col-right" data-frame-name="div.col">
+              <button type="button" class="dk-interactive-btn dk-button-subscribe-now-82316" data-dk-action="Subscribe Now" data-dk-target="#button-subscribe-now" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #FFB7C5; border: 1px solid transparent;"><span>Subscribe Now</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div id="main-artboard-vela-studio-landing" class="dk-root-frame dk-main-artboard-vela-studio-landing-55637" data-frame-name="main — Artboard / Vela Studio Landing" data-design-width="1440" data-design-height="2240">
+      <!-- ==================== HEADER — NAVBAR ==================== -->
+      <header data-dk-navbar="true" class="dk-sticky-navbar dk-header-navbar-eader" data-frame-name="header — Navbar">
+        <div class="dk-div-section-bg-56371"></div>
+        <!-- Auto-Layout: nav.container -->
+        <nav class="dk-nav-container-ainer" data-frame-name="nav.container">
+          <!-- Auto-Layout: div.row -->
+          <div class="dk-div-row-avrow" data-frame-name="div.row">
+            <h2 class="dk-a-brand-vela-studio-63719">VELA STUDIO</h2>
+            <a href="#shop-all" class="dk-interactive-link dk-a-nav-link-shop-all-63720">SHOP ALL</a>
+            <a href="#new-arrivals" class="dk-interactive-link dk-a-nav-link-new-arrivals-63721">NEW ARRIVALS</a>
+            <a href="#journal" class="dk-interactive-link dk-a-nav-link-journal-63722">JOURNAL</a>
+            <button type="button" class="dk-interactive-btn dk-button-cart-0-63713" data-dk-action="CART (0)" data-dk-target="#button-cart-0" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #FFFFFF; border: 1px solid transparent;"><span>CART (0)</span></button>
+          </div>
+        </nav>
+        <button type="button" class="dk-mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      </header>
+      <!-- ==================== SECTION#HERO — HERO ==================== -->
+      <section id="hero" class="dk-section-hero-hero-msec1" data-frame-name="section#hero — Hero">
+        <!-- Auto-Layout: div.container -->
+        <div class="dk-div-container-ainer" data-frame-name="div.container">
+          <!-- Auto-Layout: div.grid -->
+          <div class="dk-div-grid-2grid" data-frame-name="div.grid">
+            <img class="dk-img-hero-showcase-image-56378" src="https://images.pexels.com/photos/8801149/pexels-photo-8801149.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="img (Hero / Showcase Image)" loading="lazy" style="object-fit: cover; display: block;" />
+            <h1 class="dk-h1-carry-the-moment-63724">CARRY THE MOMENT</h1>
+            <h3 class="dk-h3-sculptural-forms-and-vib-63725">Sculptural forms and vibrant hues. Hand-crafted vessels designed for the modern visionary.</h3>
+            <button type="button" class="dk-interactive-btn dk-button-shop-the-drop-63714" data-dk-action="SHOP THE DROP" data-dk-target="#button-shop-the-drop" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #FFFFFF; border: 1px solid transparent;"><span>SHOP THE DROP</span></button>
+          </div>
+          <button type="button" class="dk-interactive-btn dk-button-summer-drop-24-56376" data-dk-action="SUMMER DROP 24" data-dk-target="#button-summer-drop-24" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color: #FFFFFF; border: 1px solid #E2E8F0;"><span>SUMMER DROP 24</span></button>
+          <h1 class="dk-h1-the-core-series-63726">THE CORE SERIES</h1>
+          <!-- Auto-Layout: div.grid -->
+          <div class="dk-div-grid-4grid" data-frame-name="div.grid">
+            <!-- Auto-Layout: article.card -->
+            <article class="dk-interactive-card dk-article-card-card1" data-frame-name="article.card">
+              <div class="dk-div-card-surface-56372"></div>
+              <img class="dk-img-card-image-1-56379" src="https://images.pexels.com/photos/26954381/pexels-photo-26954381.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="img (Card / Image 1)" loading="lazy" style="object-fit: cover; display: block;" />
+              <h2 class="dk-h2-the-sculpt-tote-63727">The Sculpt Tote</h2>
+              <p class="dk-p-495-00-63728">$495.00</p>
+              <button type="button" class="dk-interactive-btn dk-button-add-to-bag-63715" data-dk-action="ADD TO BAG" data-dk-target="#button-24-add-to-bag" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #FFFFFF; border: 1px solid transparent;"><span>ADD TO BAG</span></button>
+            </article>
+            <!-- Auto-Layout: article.card -->
+            <article class="dk-interactive-card dk-article-card-card2" data-frame-name="article.card">
+              <div class="dk-div-card-surface-56373"></div>
+              <img class="dk-img-card-image-2-63710" src="https://images.pexels.com/photos/26954371/pexels-photo-26954371.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="img (Card / Image 2)" loading="lazy" style="object-fit: cover; display: block;" />
+              <h2 class="dk-h2-the-curve-mini-63729">The Curve Mini</h2>
+              <p class="dk-p-320-00-63730">$320.00</p>
+              <button type="button" class="dk-interactive-btn dk-button-add-to-bag-63716" data-dk-action="ADD TO BAG" data-dk-target="#button-24-add-to-bag" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #FFFFFF; border: 1px solid transparent;"><span>ADD TO BAG</span></button>
+            </article>
+            <!-- Auto-Layout: article.card -->
+            <article class="dk-interactive-card dk-article-card-card3" data-frame-name="article.card">
+              <div class="dk-div-card-surface-56374"></div>
+              <img class="dk-img-card-image-3-63711" src="https://images.pexels.com/photos/27046147/pexels-photo-27046147.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="img (Card / Image 3)" loading="lazy" style="object-fit: cover; display: block;" />
+              <h2 class="dk-h2-the-horizon-clutch-63731">The Horizon Clutch</h2>
+              <p class="dk-p-275-00-63732">$275.00</p>
+              <button type="button" class="dk-interactive-btn dk-button-add-to-bag-63717" data-dk-action="ADD TO BAG" data-dk-target="#button-24-add-to-bag" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #FFFFFF; border: 1px solid transparent;"><span>ADD TO BAG</span></button>
+            </article>
+          </div>
+        </div>
+      </section>
+      <!-- ==================== SECTION#CTA — CALL TO ACTION ==================== -->
+      <section id="cta" class="dk-section-cta-call-to-action-msec2" data-frame-name="section#cta — Call to Action">
+        <div class="dk-div-section-bg-56375"></div>
+        <!-- Auto-Layout: div.container -->
+        <div class="dk-div-container-ainer" data-frame-name="div.container">
+          <!-- Auto-Layout: div.row -->
+          <div class="dk-div-row-itrow" data-frame-name="div.row">
+            <!-- Auto-Layout: div.col -->
+            <div class="dk-div-col-lleft" data-frame-name="div.col">
+              <img class="dk-img-bento-detail-image-63712" src="https://images.pexels.com/photos/8801079/pexels-photo-8801079.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="img (Bento / Detail Image)" loading="lazy" style="object-fit: cover; display: block;" />
+            </div>
+            <!-- Auto-Layout: div.col -->
+            <div class="dk-div-col-right" data-frame-name="div.col">
+              <h1 class="dk-h1-uncompromising-craft-63733">UNCOMPROMISING CRAFT</h1>
+              <h3 class="dk-h3-every-vela-bag-is-born-f-63734">Every Vela bag is born from Italian leather and months of architectural prototyping. We don't just make bags; we build legacies.</h3>
+              <button type="button" class="dk-interactive-btn dk-button-our-process-63718" data-dk-action="OUR PROCESS" data-dk-target="#button-our-process" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #FFFFFF; border: 1px solid transparent;"><span>OUR PROCESS</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ==================== FOOTER — SITE FOOTER ==================== -->
+      <footer class="dk-footer-site-footer-ooter" data-frame-name="footer — Site Footer">
+        <div class="dk-div-section-bg-56377"></div>
+        <!-- Auto-Layout: div.container -->
+        <div class="dk-div-container-ainer" data-frame-name="div.container">
+          <!-- Auto-Layout: div.row -->
+          <div class="dk-div-row-errow" data-frame-name="div.row">
+            <p class="dk-p-2024-vela-studio-all-63735">© 2024 VELA STUDIO. ALL RIGHTS RESERVED.</p>
+            <p class="dk-p-instagram-tiktok-pin-63736">INSTAGRAM  /  TIKTOK  /  PINTEREST</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <div id="main-artboard-desktop" class="dk-root-frame dk-main-artboard-desktop-89536" data-frame-name="main — Artboard / Desktop" data-design-width="1440" data-design-height="2300">
+      <!-- ==================== HEADER — NAVBAR ==================== -->
+      <header data-dk-navbar="true" class="dk-sticky-navbar dk-header-navbar-eader" data-frame-name="header — Navbar">
+        <div class="dk-div-section-bg-95361"></div>
+        <!-- Auto-Layout: nav.container -->
+        <nav class="dk-nav-container-ainer" data-frame-name="nav.container">
+          <!-- Auto-Layout: div.row -->
+          <div class="dk-div-row-avrow" data-frame-name="div.row">
+            <h2 class="dk-a-brand-aurelia-53619">AURELIA</h2>
+            <a href="#button-shop-dew-drops" class="dk-interactive-link dk-a-nav-link-shop-53620">SHOP</a>
+            <a href="#collections" class="dk-interactive-link dk-a-nav-link-collections-53621">COLLECTIONS</a>
+            <a href="#journal" class="dk-interactive-link dk-a-nav-link-journal-53622">JOURNAL</a>
+            <input type="search" class="dk-interactive-input dk-input-search-53617" name="input-search" placeholder="⌕" style="padding: 0 14px; font-size: 14px; color: #121212;  border: 1px solid rgba(15, 23, 42, 0.14);" />
+            <div class="dk-div-icon-badge-53615"></div>
+            <span class="dk-svg-icon-53618">✦</span>
+          </div>
+        </nav>
+        <button type="button" class="dk-mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      </header>
+      <!-- ==================== SECTION#HERO — HERO ==================== -->
+      <section id="hero" class="dk-section-hero-hero-msec1" data-frame-name="section#hero — Hero">
+        <!-- Auto-Layout: div.container -->
+        <div class="dk-div-container-ainer" data-frame-name="div.container">
+          <!-- Auto-Layout: div.row -->
+          <div class="dk-div-row-itrow" data-frame-name="div.row">
+            <!-- Auto-Layout: div.col -->
+            <div class="dk-div-col-lleft" data-frame-name="div.col">
+              <img class="dk-img-hero-image-95369" src="https://images.pexels.com/photos/40072817/pexels-photo-40072817.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="img (Hero / Image)" loading="lazy" style="object-fit: cover; display: block;" />
+              <button type="button" class="dk-interactive-btn dk-button-maxi-95364" data-dk-action="Maxi" data-dk-target="#button-maxi" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 500; font-size: 16px; color: #111111; border: 1px solid #E2E8F0;"><span>Maxi</span></button>
+              <button type="button" class="dk-interactive-btn dk-button-midi-95365" data-dk-action="Midi" data-dk-target="#button-midi" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 500; font-size: 16px; color: #121212; border: 1px solid #121212;"><span>Midi</span></button>
+              <button type="button" class="dk-interactive-btn dk-button-slip-dresses-95366" data-dk-action="Slip Dresses" data-dk-target="#button-slip-dresses" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 500; font-size: 16px; color: #121212; border: 1px solid #121212;"><span>Slip Dresses</span></button>
+              <button type="button" class="dk-interactive-btn dk-button-evening-95367" data-dk-action="Evening" data-dk-target="#button-evening" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 500; font-size: 16px; color: #121212; border: 1px solid #121212;"><span>Evening</span></button>
+              <img class="dk-img-product-1-image-53610" src="https://images.pexels.com/photos/34998750/pexels-photo-34998750.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="img (Product / 1 Image)" loading="lazy" style="object-fit: cover; display: block;" />
+              <img class="dk-img-product-2-image-53611" src="https://images.pexels.com/photos/4554218/pexels-photo-4554218.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="img (Product / 2 Image)" loading="lazy" style="object-fit: cover; display: block;" />
+              <p class="dk-p-isabella-silk-slip-53630">Isabella Silk Slip</p>
+              <p class="dk-p-elena-linen-midi-53632">Elena Linen Midi</p>
+              <p class="dk-p-295-00-53631">$295.00</p>
+              <p class="dk-p-240-00-53633">$240.00</p>
+            </div>
+            <!-- Auto-Layout: div.col -->
+            <div class="dk-div-col-right" data-frame-name="div.col">
+              <h1 class="dk-h1-the-poetry-of-silhouette-53623">The Poetry of Silhouettes</h1>
+              <h3 class="dk-h3-discover-our-summer-24-53624">Discover our Summer '24 collection. Timeless designs crafted from sustainable Italian silk and organic linen.</h3>
+              <button type="button" class="dk-interactive-btn dk-button-shop-dresses-53616" data-dk-action="SHOP DRESSES" data-dk-target="#button-shop-dresses" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #FAF9F6; border: 1px solid transparent;"><span>SHOP DRESSES</span></button>
+              <button type="button" class="dk-interactive-btn dk-button-linen-95368" data-dk-action="Linen" data-dk-target="#button-linen" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 500; font-size: 16px; color: #121212; border: 1px solid #121212;"><span>Linen</span></button>
+              <img class="dk-img-product-3-image-53612" src="https://images.pexels.com/photos/40675418/pexels-photo-40675418.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="img (Product / 3 Image)" loading="lazy" style="object-fit: cover; display: block;" />
+              <img class="dk-img-product-4-image-53613" src="https://images.pexels.com/photos/40605410/pexels-photo-40605410.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="img (Product / 4 Image)" loading="lazy" style="object-fit: cover; display: block;" />
+              <p class="dk-p-seraphina-gown-53634">Seraphina Gown</p>
+              <p class="dk-p-luna-crochet-mini-53636">Luna Crochet Mini</p>
+              <p class="dk-p-450-00-53635">$450.00</p>
+              <p class="dk-p-185-00-53637">$185.00</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ==================== SECTION#CTA — CALL TO ACTION ==================== -->
+      <section id="cta" class="dk-section-cta-call-to-action-msec2" data-frame-name="section#cta — Call to Action">
+        <div class="dk-div-section-bg-95362"></div>
+        <!-- Auto-Layout: div.container -->
+        <div class="dk-div-container-ainer" data-frame-name="div.container">
+          <!-- Auto-Layout: div.row -->
+          <div class="dk-div-row-itrow" data-frame-name="div.row">
+            <!-- Auto-Layout: div.col -->
+            <div class="dk-div-col-lleft" data-frame-name="div.col">
+              <img class="dk-img-showcase-image-53614" src="https://images.pexels.com/photos/8465935/pexels-photo-8465935.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="img (Showcase / Image)" loading="lazy" style="object-fit: cover; display: block;" />
+            </div>
+            <!-- Auto-Layout: div.col -->
+            <div class="dk-div-col-right" data-frame-name="div.col">
+              <h1 class="dk-h1-crafted-with-intent-53638">Crafted with Intent</h1>
+              <p class="dk-p-each-piece-is-handmade-i-53639">Each piece is handmade in our studio with a focus on longevity and ethical production. We believe in slow fashion that honors the environment.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ==================== FOOTER — SITE FOOTER ==================== -->
+      <footer class="dk-footer-site-footer-ooter" data-frame-name="footer — Site Footer">
+        <div class="dk-div-section-bg-95363"></div>
+        <!-- Auto-Layout: div.container -->
+        <div class="dk-div-container-ainer" data-frame-name="div.container">
+          <!-- Auto-Layout: div.row -->
+          <div class="dk-div-row-errow" data-frame-name="div.row">
+            <p class="dk-p-2024-aurelia-studio-a-53640">© 2024 AURELIA STUDIO. ALL RIGHTS RESERVED.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <div id="instagram-post-1-1-artboard" class="dk-root-frame dk-instagram-post-1-1-artboard-10198" data-frame-name="Instagram Post (1:1) Artboard" data-design-width="1080" data-design-height="1080">
+      <h1 class="dk-bouncy-cushiony-skin-made-l-r1zed">Bouncy, cushiony skin made lovingly cute.</h1>
+      <img class="dk-hero-model-image-j53tb" src="https://images.pexels.com/photos/4920513/pexels-photo-4920513.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="Hero / Model Image" loading="lazy" style="object-fit: cover; display: block;" />
+      <button type="button" class="dk-interactive-btn dk-hero-cta-primary-yd04i" data-dk-action="Shop Dew Drops" data-dk-target="#button-shop-dew-drops" style="display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #FFFFFF; border: 1px solid transparent;"><span>Shop Dew Drops</span></button>
+    </div>
+  </main>
+  <script>
+    (function () {
+      // 1. Mobile Navigation Drawer Toggle
+      document.querySelectorAll('.dk-mobile-menu-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var nav = btn.closest('[data-dk-navbar="true"]');
+          if (!nav) return;
+          var isOpen = nav.classList.toggle('dk-mobile-nav-open');
+          btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+      });
+
+      // 2. Sticky Navbar Scroll State
+      function updateStickyNavbars() {
+        var scrolled = (window.scrollY || window.pageYOffset || 0) > 10;
+        document.querySelectorAll('.dk-sticky-navbar, [data-dk-navbar="true"]').forEach(function (nav) {
+          if (scrolled) nav.classList.add('dk-navbar-scrolled');
+          else nav.classList.remove('dk-navbar-scrolled');
+        });
+      }
+      updateStickyNavbars();
+      window.addEventListener('scroll', updateStickyNavbars, { passive: true });
+
+      // 3. Staggered Entrance Micro-Animations
+      var animTargets = document.querySelectorAll('.dk-root-frame > *');
+      animTargets.forEach(function (el, idx) {
+        if (el.classList.contains('dk-sticky-navbar')) return;
+        el.style.setProperty('--dk-delay', Math.min(idx * 35, 420) + 'ms');
+        el.classList.add('dk-animate-in');
+      });
+
+      // 4. Toast Notification Helper
+      var toastTimer = null;
+      function showToast(message) {
+        var toast = document.querySelector('.dk-toast-notification');
+        if (!toast) {
+          toast = document.createElement('div');
+          toast.className = 'dk-toast-notification';
+          document.body.appendChild(toast);
+        }
+        toast.textContent = message;
+        toast.classList.add('dk-toast-visible');
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toast.classList.remove('dk-toast-visible');
+        }, 2600);
+      }
+
+      // 5. Interactive Buttons (Ripple + Form Input Capture + Smooth Target Scroll)
+      document.addEventListener('click', function (e) {
+        var btn = e.target && e.target.closest ? e.target.closest('.dk-interactive-btn, button') : null;
+        if (btn) {
+          var rect = btn.getBoundingClientRect();
+          var ripple = document.createElement('span');
+          ripple.className = 'dk-ripple-wave';
+          ripple.style.left = (e.clientX - rect.left) + 'px';
+          ripple.style.top = (e.clientY - rect.top) + 'px';
+          btn.appendChild(ripple);
+          setTimeout(function () { ripple.remove(); }, 600);
+
+          var label = (btn.getAttribute('data-dk-action') || btn.textContent || 'Action').trim();
+          var targetSelector = btn.getAttribute('data-dk-target') || '';
+
+          // Check if there is a filled input nearby
+          var scope = btn.closest('.dk-root-frame') || document;
+          var inputs = scope.querySelectorAll('input.dk-interactive-input, textarea.dk-interactive-input');
+          var filledValues = [];
+          inputs.forEach(function (inp) {
+            if (inp.value && inp.value.trim()) {
+              filledValues.push(inp.value.trim());
+            }
+          });
+
+          if (filledValues.length > 0 && /submit|send|subscribe|join|start|search|login|sign|book|continue|apply/i.test(label)) {
+            showToast('✓ ' + label + ': ' + filledValues.join(', '));
+            return;
+          }
+
+          if (targetSelector && targetSelector.startsWith('#') && targetSelector.length > 1) {
+            var targetEl = document.querySelector(targetSelector);
+            if (targetEl) {
+              targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              return;
+            }
+          }
+          showToast('✓ ' + label);
+        }
+
+        var link = e.target && e.target.closest ? e.target.closest('a.dk-interactive-link') : null;
+        if (link) {
+          var href = link.getAttribute('href') || '';
+          if (href.startsWith('#')) {
+            e.preventDefault();
+            if (href === '#top' || href === '#') {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+              var section = document.querySelector(href);
+              if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              else showToast('Navigating to ' + (link.textContent || href).trim());
+            }
+          }
+        }
+      });
+
+      // 6. Interactive Inputs (Enter Key Submission)
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && e.target && e.target.matches && e.target.matches('input.dk-interactive-input')) {
+          var val = (e.target.value || '').trim();
+          if (val) {
+            showToast('✓ Submitted: ' + val);
+          } else {
+            e.target.focus();
+          }
+        }
+      });
+    })();
+  </script>
+</div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+</html>
